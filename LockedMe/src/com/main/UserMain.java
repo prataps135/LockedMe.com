@@ -1,7 +1,6 @@
 package com.main;
 
-//import java.io.BufferedReader;
-//import java.io.InputStreamReader;
+
 import java.util.Scanner;
 
 public class UserMain {
@@ -9,9 +8,8 @@ public class UserMain {
 	public static void main(String[] args) {
 		// Variable declaration
 		int option;
-		String status = "y";
-//		InputStreamReader isr = new InputStreamReader(System.in);
-//		BufferedReader br = new BufferedReader(isr);
+		boolean status = true;
+
 		// use scanner object for input
 		Scanner sc = new Scanner(System.in);
 
@@ -37,17 +35,15 @@ public class UserMain {
 
 				break;
 			case 4:
-
+				status = false;
 				break;
 
 			default:
 				System.out.println("Invalid input");
 				break;
 			}
-			System.out.println("Do you want to continue(y/n)");
-			status = sc.next();
 
-		} while (status.equalsIgnoreCase("y"));
+		} while (status);
 	}
 
 }
