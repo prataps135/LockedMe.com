@@ -34,11 +34,15 @@ public class UserDAO {
 
 	public boolean insertFile(FileBean file) {
 		boolean insertStatus = false;
-		if (fileMap.containsKey(file.getName())) {
-			System.out.println("File already exist");
+		if (file.getName() != null && file.getName().trim().length() > 0) {
+			if (fileMap.containsKey(file.getName())) {
+				System.out.println("File already exist");
+			} else {
+				fileMap.put(file.getName(), file);
+				insertStatus = true;
+			}
 		} else {
-			fileMap.put(file.getName(), file);
-			insertStatus = true;
+			System.out.println("Invalid file name");
 		}
 		return insertStatus;
 	}
@@ -55,18 +59,26 @@ public class UserDAO {
 
 	public boolean deleteFile(String fileName) {
 		boolean deleteStatus = false;
-		if (fileMap.containsKey(fileName)) {
-			fileMap.remove(fileName);
-			System.out.println("File Succesfully deleted");
-			deleteStatus = true;
+		if (fileName != null && fileName.trim().length() > 0) {
+			if (fileMap.containsKey(fileName)) {
+				fileMap.remove(fileName);
+				System.out.println("File Succesfully deleted");
+				deleteStatus = true;
+			}
+		} else {
+			System.out.println("Invalid file name");
 		}
 		return deleteStatus;
 	}
 
 	public FileBean serach(String fileName) {
 		FileBean file = null;
-		if (fileMap.containsKey(fileName)) {
-			file = fileMap.get(fileName);
+		if (fileName != null && fileName.trim().length() > 0) {
+			if (fileMap.containsKey(fileName)) {
+				file = fileMap.get(fileName);
+			}
+		} else {
+			System.out.println("Invalid file name");
 		}
 		return file;
 	}

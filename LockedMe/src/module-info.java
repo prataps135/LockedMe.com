@@ -6,4 +6,6 @@
  *
  */
 module LockedMe {
+	requires junit;
+	
 }

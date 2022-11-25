@@ -20,6 +20,7 @@ public class UserMain {
 		BufferedReader br = new BufferedReader(isr);
 
 		System.out.println("Welcome to LockedMe.com");
+		System.out.println("Developed by :- Pratap Singh Sisodia\n");
 
 		// checking the user option
 		do {
