@@ -1,15 +1,16 @@
 package com.main;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.bean.FileBean;
 import com.controller.UserController;
 
 public class UserMain {
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		// Variable declaration
-		int option;
+		String option = null;
 		boolean status = true;
 
 		// creating object of user controller class
@@ -29,32 +30,44 @@ public class UserMain {
 			System.out.println("1. Retriving all files name. \n2. Performing operation on files. \n3. Exit.");
 
 			// taking user input for option
-			option = Integer.parseInt(br.readLine());
-			switch (option) {
-			case 1:
+			try {
+				option = br.readLine();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			switch (option.trim()) {
+			case "1":
 				String[] arr = usrc.displayList();
 				System.out.println("List of files stored in Database");
 				for (int i = 0; i < arr.length; i++) {
 					System.out.println(arr[i]);
 				}
 				break;
-			case 2:
-				int key;
+			case "2":
+				String key = null;
 				boolean inStatus = true;
 				do {
 					System.out.println("Choose any option");
 					System.out
 							.println("1. Add a file.\n2. Delete a file. \n3. Search a file. \n4. Return to main menu");
-					key = Integer.parseInt(br.readLine());
-					switch (key) {
-					case 1:
+					try {
+						key = br.readLine();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					switch (key.trim()) {
+					case "1":
 						// creating local variables
-						String fileName;
-						String fileContent;
+						String fileName = null;
+						String fileContent = null;
 
 						// taking file name and content from user
 						System.out.println("Enter file name = ");
-						fileName = br.readLine();
+						try {
+							fileName = br.readLine();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
 						// creating object of file bean class
 						FileBean file = new FileBean();
@@ -63,7 +76,11 @@ public class UserMain {
 						boolean insertStatus = usrc.insertFile(file);
 						if (insertStatus) {
 							System.out.println("Enter file content = ");
-							fileContent = br.readLine();
+							try {
+								fileContent = br.readLine();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 							file.setFileContent(fileContent);
 							System.out.println("File inserted");
 						} else {
@@ -71,22 +88,30 @@ public class UserMain {
 						}
 						break;
 
-					case 2:
-						String fileNameDelete;
+					case "2":
+						String fileNameDelete = null;
 						boolean deleteStatus;
 						System.out.println("Enter file name to delete = ");
-						fileNameDelete = br.readLine();
+						try {
+							fileNameDelete = br.readLine();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						deleteStatus = usrc.deleteFile(fileNameDelete);
 						if (!deleteStatus) {
 							System.out.println("File Not Found");
 						}
-
 						break;
-					case 3:
-						String searchFileName;
+
+					case "3":
+						String searchFileName = null;
 						FileBean searchFile = new FileBean();
 						System.out.println("Enter the name of file you want to search = ");
-						searchFileName = br.readLine();
+						try {
+							searchFileName = br.readLine();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 						searchFile = usrc.serach(searchFileName);
 						if (searchFile == null) {
 							System.out.println("File Not found");
@@ -95,7 +120,8 @@ public class UserMain {
 							System.out.println("File Content = " + searchFile.getFileContent());
 						}
 						break;
-					case 4:
+
+					case "4":
 						inStatus = false;
 						break;
 
@@ -105,16 +131,15 @@ public class UserMain {
 					}
 				} while (inStatus);
 				break;
-			case 3:
+
+			case "3":
 				status = false;
 				break;
+
 			default:
 				System.out.println("Invalid input \nPlease enter a valid number.");
 				break;
 			}
-
 		} while (status);
-
 	}
-
 }
